@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/datetimepicker/static/css/main.de7a112b.css",
+    "main.js": "/datetimepicker/static/js/main.6a99c76b.js",
+    "static/js/453.ba5f808b.chunk.js": "/datetimepicker/static/js/453.ba5f808b.chunk.js",
+    "index.html": "/datetimepicker/index.html",
+    "main.de7a112b.css.map": "/datetimepicker/static/css/main.de7a112b.css.map",
+    "main.6a99c76b.js.map": "/datetimepicker/static/js/main.6a99c76b.js.map",
+    "453.ba5f808b.chunk.js.map": "/datetimepicker/static/js/453.ba5f808b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.de7a112b.css",
+    "static/js/main.6a99c76b.js"
+  ]
+}
