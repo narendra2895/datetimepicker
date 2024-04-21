@@ -1,30 +1,38 @@
-// CustomModal.js
-import React from 'react';
+import React, { useState, useRef } from 'react';
+import './App.css';
+import Demo from './Demo';
 
-function CustomModal({ open, onClose, children }) {
-    if (!open) return null; // Doesn't render if not open
+function App() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dialogRef = useRef(null);
 
-    return (
-        <dialog style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 1050 // Ensure it's higher than other elements
-        }}>
-            <div style={{ background: 'white', padding: 20 ,width:'500px', height:'500px' }}>
-                {children}
-                <button onClick={onClose} style={{ position: 'absolute', top: 10, right: 10 }}>
-                    Close
-                </button>
-            </div>
-        </dialog>
-    );
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="App">
+      <button style={{ color: 'white', background: 'black' }} onClick={handleOpenModal}>
+        Open Modal
+      </button>
+      {/* Backdrop controlled by isOpen state */}
+      {isOpen && <div className="backdrop" onClick={handleCloseModal}></div>}
+      {/* Dialog managed by useRef */}
+      <dialog ref={dialogRef} className="" style={{ width: '500px', height: '500px' }} open={isOpen}>
+        <Demo />
+        <button className="alertbutton" onClick={() => { alert("Hi, I'm clicked"); }}>
+          Click me
+        </button>
+        <button onClick={handleCloseModal} style={{ position: 'absolute', top: 10, right: 10 }}>
+          Close
+        </button>
+      </dialog>
+    </div>
+  );
 }
 
-export default CustomModal;
+export default App;

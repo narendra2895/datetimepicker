@@ -1,46 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 import Demo from './Demo';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
+  // Open modal function simplifies state management
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
 
-  const handleOpenModal = () => setIsOpen(true);
-  const handleCloseModal = () => setIsOpen(false);
-
-  // Properly clean up when the component unmounts
-  useEffect(() => {
-    const handleEscape = (event) => {
-      if (event.keyCode === 27) handleCloseModal(); // Close modal on ESC key
-    };
-
-    document.addEventListener('keydown', handleEscape);
-
-    // Cleanup function to remove event listener
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-    };
-  }, []); // Empty dependency array means this effect runs only on mount and unmount
+  // Close modal function handles both dialog reference and state
+  const handleCloseModal = () => {
+    
+    setIsOpen(false);
+  };
 
   return (
     <div className="App">
-      <button style={{color: 'white', background: 'black'}} onClick={handleOpenModal}>
+      <button style={{ color: 'white', background: 'black' }} onClick={handleOpenModal}>
         Open Modal
       </button>
-      {isOpen && (
-        <>
-          <div className="backdrop" onClick={handleCloseModal}></div>
-          <div className="modal" style={{ width: '500px', height: '500px' }}>
-            <Demo />
-            <button className="alertbutton" onClick={() => { alert("Hi, I'm clicked"); }}>
-              Click me
-            </button>
-            <button onClick={handleCloseModal} style={{ position: 'absolute', top: 10, right: 10 }}>
-              Close
-            </button>
-          </div>
-        </>
-      )}
+      {/* Backdrop controlled by isOpen state, closes modal on click */}
+      {isOpen && <div className="backdrop" onClick={handleCloseModal}></div>}
+      {/* Dialog managed by useRef and controlled by isOpen state */}
+      <dialog  className="" style={{ width: '500px', height: '500px' }} open={isOpen}>
+        <Demo />
+        <button className="alertbutton" onClick={() => alert("Hi, I'm clicked")}>
+          Click me
+        </button>
+        <button onClick={handleCloseModal} style={{ position: 'absolute', top: 10, right: 10 }}>
+          Close
+        </button>
+      </dialog>
     </div>
   );
 }
